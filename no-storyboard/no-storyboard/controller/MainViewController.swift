@@ -14,12 +14,16 @@ class MainViewController: UIViewController {
     // MARK: Properties
     //-------------------------------------------------------------------------------------------------------------
     //Views
-    var scrContent: UIScrollView = {
-        let scr = UIScrollView()
-        scr.translatesAutoresizingMaskIntoConstraints = false
-        scr.backgroundColor = UIColor.green
-        scr.alwaysBounceVertical = true
-        return scr
+    lazy var tbvElements: UITableView = {
+        let tbv = UITableView()
+        tbv.translatesAutoresizingMaskIntoConstraints = false
+        tbv.delegate = self
+        tbv.dataSource = self
+        tbv.register(ElementCell.self, forCellReuseIdentifier: ElementCell.classIdentifier())
+        tbv.rowHeight = 300
+        tbv.separatorStyle = .none
+        tbv.allowsSelection = false
+        return tbv
     }()
     
     
@@ -34,11 +38,6 @@ class MainViewController: UIViewController {
         setupData()
         setupText()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
 
     //-------------------------------------------------------------------------------------------------------------
@@ -50,13 +49,13 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         //Add scroll in superview
-        view.addSubview(scrContent)
+        view.addSubview(tbvElements)
         
         //Add contrainsts
-        scrContent.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        scrContent.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        scrContent.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrContent.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tbvElements.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tbvElements.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tbvElements.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tbvElements.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func setupData() {
@@ -66,5 +65,33 @@ class MainViewController: UIViewController {
     
     func setupText() {
         title = "Main"
+    }
+}
+
+
+//-------------------------------------------------------------------------------------------------------------
+// MARK: Table View Delegate
+//-------------------------------------------------------------------------------------------------------------
+extension MainViewController: UITableViewDelegate {
+    
+}
+
+//-------------------------------------------------------------------------------------------------------------
+// MARK: Table View Data Source
+//-------------------------------------------------------------------------------------------------------------
+extension MainViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //
+        let cell = tableView.dequeueReusableCell(withIdentifier: ElementCell.classIdentifier(), for: indexPath) as! ElementCell
+        return cell
     }
 }
