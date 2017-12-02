@@ -33,7 +33,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //Sets
+        //Setup
         setupLayout()
         setupData()
         setupText()
@@ -56,6 +56,10 @@ class MainViewController: UIViewController {
         tbvElements.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tbvElements.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tbvElements.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        //Check Force Touch Capability
+        guard traitCollection.forceTouchCapability == .available else { return }
+        registerForPreviewing(with: self, sourceView: view)
     }
     
     func setupData() {
@@ -94,4 +98,23 @@ extension MainViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ElementCell.classIdentifier(), for: indexPath) as! ElementCell
         return cell
     }
+}
+
+//-------------------------------------------------------------------------------------------------------------
+// MARK: UIViewControllerPreviewingDelegate
+//-------------------------------------------------------------------------------------------------------------
+extension MainViewController: UIViewControllerPreviewingDelegate {
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        //Controller
+        let detailViewController = DetailViewController()
+        return detailViewController
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        show(viewControllerToCommit, sender: self)
+    }
+    
+    
 }

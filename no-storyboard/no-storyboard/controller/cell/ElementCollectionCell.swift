@@ -17,7 +17,7 @@ class ElementCollectionCell: UICollectionViewCell {
     lazy var imgElement: UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
-        img.contentMode = .scaleAspectFill
+        img.contentMode = .scaleToFill
         img.clipsToBounds = true
         img.image = UIImage(named: "ps4")
         return img
@@ -49,10 +49,10 @@ class ElementCollectionCell: UICollectionViewCell {
         addSubview(imgElement)
         
         //Add contrainsts
-        imgElement.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        imgElement.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         imgElement.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        imgElement.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        imgElement.heightAnchor.constraint(equalToConstant: 180).isActive = true
+        imgElement.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
+        imgElement.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
     }
     
     func setupData() {

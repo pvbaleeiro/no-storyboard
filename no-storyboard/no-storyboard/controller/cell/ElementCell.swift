@@ -19,11 +19,12 @@ class ElementCell: UITableViewCell {
         clvLayout.scrollDirection = .horizontal
         clvLayout.minimumInteritemSpacing = 0
         clvLayout.minimumLineSpacing = 0
-        clvLayout.itemSize = CGSize(width: 300, height: 300)
+        clvLayout.itemSize = CGSize(width: 280, height: 230)
         
         let clv = UICollectionView(frame: .zero, collectionViewLayout: clvLayout)
         clv.translatesAutoresizingMaskIntoConstraints = false
         clv.register(ElementCollectionCell.self, forCellWithReuseIdentifier: ElementCollectionCell.classIdentifier())
+        clv.backgroundColor = UIColor.clear
         clv.delegate = self
         clv.dataSource = self
         return clv
@@ -57,7 +58,7 @@ class ElementCell: UITableViewCell {
         //Add contrainsts
         clvElement.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         clvElement.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        clvElement.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        clvElement.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
         clvElement.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
     }
     
@@ -88,7 +89,7 @@ extension ElementCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
